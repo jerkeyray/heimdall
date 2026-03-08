@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -14,7 +15,15 @@ import (
 	"github.com/jerkeyray/heimdall/stream"
 )
 
+const banner = "" +
+	"\033[36m _   _ \033[35m_____ ___ \033[36m__  __ ____\033[35m    _    \033[36m_     _\033[0m\n" +
+	"\033[36m| | | |\033[35m ____|_ _|\033[36m  \\/  |  _ \\\033[35m  / \\  \033[36m| |   | |\033[0m\n" +
+	"\033[36m| |_| |\033[35m  _|  | |\033[36m| |\\/| | | | |\033[35m/ _ \\ \033[36m| |   | |\033[0m\n" +
+	"\033[36m|  _  |\033[35m |___ | |\033[36m| |  | | |_| \033[35m/ ___ \\\033[36m| |___| |___\033[0m\n" +
+	"\033[36m|_| |_|\033[35m_____|___|\033[36m_|  |_|____/\033[35m_/   \\_\\\033[36m_____|_____|\033[0m\n"
+
 func main() {
+	fmt.Print(banner)
 	port := envOr("PORT", "8080")
 
 	// read API keys from ENV and build provider registry.
@@ -48,7 +57,7 @@ func main() {
 	}
 
 	go func() {
-		slog.Info("server starting", "addr", srv.Addr)
+		slog.Info("server starting", "addr", "http://localhost:"+port)
 		// check for http.ErrServerClosed else every clean shutdown would log as an error and call os.Exit(1)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("server error", "err", err)

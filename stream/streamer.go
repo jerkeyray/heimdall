@@ -169,7 +169,11 @@ func Stream(ctx context.Context, w http.ResponseWriter, provider heimdall.Provid
 			return nil
 		}
 
-		// Normal token chunk.
+		// skip chunks with empty content
+		if chunk.Content == "" {
+			continue
+		}
+		
 		writeChunk(w, flusher, wireChunk{Content: chunk.Content})
 	}
 

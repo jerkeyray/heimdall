@@ -1,0 +1,21 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o ./tmp/heimdall ./cmd/heimdall/"
+  entrypoint = "./tmp/heimdall"
+  include_ext = ["go"]
+  exclude_dir = ["tmp", "bin", "vendor"]
+  delay = 1000
+
+[log]
+  time = false
+
+[color]
+  main = "cyan"
+  watcher = "blue"
+  build = "yellow"
+  runner = "green"
+
+[misc]
+  clean_on_exit = true
